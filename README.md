@@ -50,7 +50,7 @@ pwsh ./Start-Demo.ps1 ./script
 
 Pay attention to the lines below to remove Ubuntu specific or names that may be in use by other users.
 
-## Ubuntu 16.04 Specific Items
+### Ubuntu 16.04 Specific Items
 
 * Any 'apt' or 'apt-get' call.
 * Install dotnet
@@ -63,11 +63,11 @@ sudo apt-get install -y apt-transport-https
 sudo apt-get install -y dotnet-sdk-2.1.4
 ```
 
-## MacOS Specific Items
+### MacOS Specific Items
 
 * Anything related to 'brew' which is [homebrew](https://brew.sh/).
 
-## Variables
+### Variables
 
 * The Azure Resource Group "k8sJvB"
 * The Kubernetes Clusters "JvBK8sClusterOld" and "JvBK8sCluster"
@@ -77,6 +77,6 @@ sudo apt-get install -y dotnet-sdk-2.1.4
 sudo /home/jvb/bin/az aks install-cli
 ```
 
-## Questions or Comments
+### Questions or Comments
 
 Updates to this demo will be published to [@jasonvanbrackel](https://www.twitter.com/jasonvanbrackel) on twitter and my site [morehuman.software](https://morehuman.software)
