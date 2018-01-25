@@ -82,6 +82,10 @@ sudo apt-get install -y dotnet-sdk-2.1.4
 sudo /home/jvb/bin/az aks install-cli
 ```
 
+### Video
+
+This presentation was given as part of the [Philly.NET Monthly Meetup](https://www.meetup.com/Philly-NET/).  It can be [watched here on YouTube](https://www.youtube.com/watch?v=n-Doy0EIkUM&t=10m31s).
+
 ### Questions or Comments
 
 Updates to this demo will be published to [@jasonvanbrackel](https://www.twitter.com/jasonvanbrackel) on twitter and my site [morehuman.software](https://morehuman.software)
