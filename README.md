@@ -19,6 +19,7 @@ As of 1/24/2018 this demo must be run within Linux as Draft is not compatible wi
 ```sh
 .
 ├── installPowershell.sh
+├── .NET Containerization with K8s, Helm, and Draft.pptx
 ├── README.md
 ├── script
 └── Start-Demo.ps1
@@ -27,6 +28,10 @@ As of 1/24/2018 this demo must be run within Linux as Draft is not compatible wi
 ### installPowershell.sh
 
 Run this first to setup Powershell in your linux box. This script is designed for Ubuntu 16.04. For other versions or more information see [Powershell - Package Installation Instructions](https://github.com/PowerShell/PowerShell/blob/master/docs/installation/linux.md)
+
+### .NET Containerization with K8s, Helm, and Draft.pptx
+
+Slide deck for the presentation given prior to the demo.
 
 ### README.md
 
