@@ -3,7 +3,7 @@
 ## Technologies Covered
 
 * [Azure Container Service v1 (ACS)](https://docs.microsoft.com/en-us/azure/container-service/kubernetes/)
-* [Azure Container Service v1 (AKS)](https://docs.microsoft.com/en-us/azure/aks/)
+* [Azure Container Service v2 (AKS)](https://docs.microsoft.com/en-us/azure/aks/)
 * [Kubernetes](https://kubernetes.io)
 * [Helm](https://helm.sh)
 * [Draft](https://draft.sh)
