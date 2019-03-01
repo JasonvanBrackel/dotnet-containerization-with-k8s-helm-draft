@@ -1,87 +1,52 @@
-# Run Azure Cloud Shell
-firefox https://shell.azure.com/bash
+# Get Docker Hub Credentials
+$docker_creds = Get-Credential 
 
-# Install Azure CLI 2.0
-curl -L https://aka.ms/InstallAzureCli | bash
-
-# Login to Azure
-az login
-
-# Enable the AKS Preview in your Azure subscription
-az provider register -n Microsoft.ContainerService
-
-# Create a resource group
-az group create --name k8sJvB --location eastus
-
-# Create the Kubernetes Cluster
-# Azure Container Service v1
-az acs create --orchestrator-type Kubernetes --resource-group k8sJvB --name JvBK8sClusterOld
-
-# Azure Container Service v2
-az aks create --resource-group k8sJvB --name JvBK8sCluster --node-count 1 --generate-ssh-keys
-
-# Install kubectl 
-sudo /home/jvb/bin/az aks install-cli
-
-# Get Kubernetes Credentials
-# Azure Container Service v1
-az acs kubernetes get-credentials --resource-group k8sJvB --name JvBK8sClusterOld
-
-# Azure Container Service v2
-az aks get-credentials --resource-group k8sJvB --name JvBK8sCluster
-
-# Open Kubernetes UI
-# Azure Container Service v1 
-az acs Kubernetes browse --resource-group k8sJvB --name JvBK8sClusterOld
-
-# Azure Container Service v2
-az aks browse --resource-group k8sJvB --name JvBK8sCluster
+# Install kubectl
+choco install kubernetes-cli
 
 # Install Helm
-curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get > get_helm.sh
-chmod 700 get_helm.sh
-./get_helm.sh
+choco install kubernetes-helm
 
-# Install Tiller into the Kubernetes Cluster
-helm init
+# Install Draft
+choco install Draft
 
-# Check that Tiller is running
-kubectl get deploy --namespace kube-system
-
-# Install VirtualBox
-sudo apt install -y virtualbox
+# Install Docker
+choco install docker-desktop --pre
 
 # Install minikube
-curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 && chmod +x minikube && sudo mv minikube /usr/local/bin/
+choco install minikube
 
-# Start minikube won't work on VMs unless your hardware support hypervisor inside hypervisor
-minikube start
+# Setup an internal virtual switch for minikube
+Get-NetAdapter
+New-VMSwitch -name Minikube  -AllowManagementOS $true 
 
-# Install homebrew (MacOS only)
-sudo apt install linuxbrew-wrapper
+# Stop for a moment and setup Internet Connection Sharing
 
-# Install Draft (MacOS only)
-brew tap azure/draft
-brew install draft
+# Refresh Environment Variables
+RefreshEnv.cmd
 
-# Install Draft (Linux)
-curl -Lo draft-canary-linux-amd64.tar.gz https://azuredraft.blob.core.windows.net/draft/draft-canary-linux-amd64.tar.gz
-tar -xzvf draft-canary-linux-amd64.tar.gz
-# This are main release.  We're using the canary releases above.
-# curl -Lo draft-v0.9.0-linux-amd64.tar.gz  https://azuredraft.blob.core.windows.net/draft/draft-v0.9.0-linux-amd64.tar.gz
-# tar -xvzf draft-v0.9.0-linux-amd64.tar.gz
-sudo cp ./linux-amd64/draft /usr/local/bin
+# Start Minikube
+minikube start --vm-driver hyperv --hyperv-virtual-switch Minikube
 
-# Initialize draft
+# Install Helm note this is not a secure method.  See https://helm.sh/docs/using_helm/#role-based-access-control for more details
+helm init
+
+# Install Draft
 draft init
 
-# Install dotnet
-sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/microsoft-ubuntu-xenial-prod xenial main" > /etc/apt/sources.list.d/dotnetdev.list'
-sudo apt-get update
-sudo apt-get install -y apt-transport-https
-sudo apt-get install -y dotnet-sdk-2.1.4
+# Pull down some code
+cd..
+git@github.com:JasonvanBrackel/discourse-social-exporter.git
+cd discourse-social-exporter\Rancher.Scrappers.Discourse
 
-# Create an app
-mkdir -p examples/dotnet
-cd examples/dotnet
-dotnet new web -n WebApplication -o .
+# Login to docker
+docker login
+
+# Create Container and Kubernetes Items
+draft create
+
+# Modify draft configuration
+code .
+
+# Deploy
+draft up
